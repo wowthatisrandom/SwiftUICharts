@@ -90,19 +90,23 @@ extension CTLineBarChartDataProtocol where Self: GetDataProtocol {
      - Returns: Array of labels.
      */
     private func generateYLabels(_ specifier: String) -> [String] {
-        switch self.chartStyle.yAxisLabelType {
-        case .numeric:
-            let dataRange: Double = self.range
-            let minValue: Double = self.minValue
-            let range: Double = dataRange / Double(self.chartStyle.yAxisNumberOfLabels-1)
-            let firstLabel = [String(format: specifier, minValue)]
-            let otherLabels = (1...self.chartStyle.yAxisNumberOfLabels-1).map { String(format: specifier, minValue + range * Double($0)) }
-            let labels = firstLabel + otherLabels
-            return labels
-        case .custom:
-            return self.yAxisLabels ?? []
+            switch self.chartStyle.yAxisLabelType {
+            case .numeric:
+                let dataRange: Double = self.range
+                let minValue: Double = self.minValue
+                let range: Double = dataRange / Double(self.chartStyle.yAxisNumberOfLabels-1)
+                let firstLabel = [String(format: specifier, minValue)]
+                if(self.chartStyle.yAxisNumberOfLabels <= 1) {
+                    return firstLabel
+                } else {
+                    let otherLabels = (1...self.chartStyle.yAxisNumberOfLabels-1).map { String(format: specifier, minValue + range * Double($0)) }
+                    let labels = firstLabel + otherLabels
+                    return labels
+                }
+            case .custom:
+                return self.yAxisLabels ?? []
+            }
         }
-    }
 }
 
 
