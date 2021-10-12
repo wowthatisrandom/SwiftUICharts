@@ -106,21 +106,25 @@ extension CTLineBarChartDataProtocol where Self: GetDataProtocol {
                     return [String(format: specifier, minValue)]
                 }
             }()
-            let otherLabels: [String] = (1...self.chartStyle.yAxisNumberOfLabels-1).map {
-                let value = minValue + range * Double($0)
-                if let formatter = numberFormatter,
-                   let formattedNumber = formatter.string(from: NSNumber(value: value)) {
-                    return formattedNumber
-                } else {
-                    return String(format: specifier, value)
-                }
+			
+            if(self.chartStyle.yAxisNumberOfLabels <= 1) {
+                return firstLabel
+            } else {
+	            let otherLabels: [String] = (1...self.chartStyle.yAxisNumberOfLabels-1).map {
+	                let value = minValue + range * Double($0)
+	                if let formatter = numberFormatter,
+	                   let formattedNumber = formatter.string(from: NSNumber(value: value)) {
+	                    return formattedNumber
+	                } else {
+	                    return String(format: specifier, value)
+	                }
+	            }
+	            let labels = firstLabel + otherLabels
+	            return labels
             }
-            let labels = firstLabel + otherLabels
-            return labels
         case .custom:
             return self.yAxisLabels ?? []
         }
-    }
 }
 
 
