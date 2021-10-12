@@ -84,7 +84,8 @@ public final class MultiLineChartData: CTLineChartDataProtocol, GetDataProtocol,
                             }
                         }
                         .frame(width: min(self.getXSection(dataSet: self.dataSets.dataSets[0], chartSize: self.viewData.chartSize), self.viewData.xAxislabelWidths.min() ?? 0),
-                               height: self.viewData.xAxisLabelHeights.max())
+                               height: 8)
+                        .offset(y: 2)
                         if data != self.dataSets.dataSets[0].dataPoints[self.dataSets.dataSets[0].dataPoints.count - 1] {
                             Spacer()
                                 .frame(minWidth: 0, maxWidth: 500)

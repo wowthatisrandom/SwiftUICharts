@@ -108,13 +108,13 @@ extension CTLineBarChartDataProtocol where Self: GetDataProtocol {
 
 extension CTLineBarChartDataProtocol {
    internal var yAxisPaddingHeight: CGFloat {
-        (self.viewData.xAxisLabelHeights.max() ?? 0) + self.viewData.xAxisTitleHeight
+        8 + self.viewData.xAxisTitleHeight
     }
 }
 
 extension CTLineBarChartDataProtocol where Self: GetDataProtocol {
     public func getYAxisLabels() -> some View {
-        VStack {
+        VStack(spacing:0) {
             if self.chartStyle.xAxisLabelPosition == .top {
                 Spacer()
                     .frame(height: yAxisPaddingHeight)
@@ -146,9 +146,9 @@ extension CTLineBarChartDataProtocol where Self: GetDataProtocol {
             }
         }
         .ifElse(self.chartStyle.xAxisLabelPosition == .bottom, if: {
-            $0.padding(.top, -8)
+            $0.padding(.top, 0)
         }, else: {
-            $0.padding(.bottom, -8)
+            $0.padding(.bottom, 0)
         })
     }
 }
