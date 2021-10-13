@@ -97,7 +97,7 @@ extension CTLineBarChartDataProtocol where Self: GetDataProtocol {
                 let range: Double = dataRange / Double(self.chartStyle.yAxisNumberOfLabels-1)
                 let firstLabel = [String(format: specifier, minValue)]
                 if(self.chartStyle.yAxisNumberOfLabels <= 1) {
-                    return firstLabel
+                    return [firstLabel, ""]
                 } else {
                     let otherLabels = (1...self.chartStyle.yAxisNumberOfLabels-1).map { String(format: specifier, minValue + range * Double($0)) }
                     let labels = firstLabel + otherLabels
